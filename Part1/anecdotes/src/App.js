@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
 
-const Button = ({clickEvent}) => {
+const Button = ({clickEvent, text}) => {
   return(
-    <div>
-      <button onClick={clickEvent}>next anecdote</button>
-    </div>
+      <button onClick={clickEvent}>{text}</button>
   )
 }
 
 const App = () => {
+
+  const [selected, setSelected] = useState(0)
+  const [points, setPoints] = useState({0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0})
+  
+
   const anecdotes = [
     'If it hurts, do it more often',
     'Adding manpower to a late software project makes it later!',
@@ -18,12 +21,28 @@ const App = () => {
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
   ]
 
-  const [selected, setSelected] = useState(0)
+  const HandlePoints = () => {
+    const newPoints = { 
+      ...points, 
+      [selected]: points[selected] + 1
+    }
+    setPoints(newPoints)
+  }
+
+  const NextAnecdote = () => {
+    let index = Math.floor(Math.random() * 6)
+    while (index === selected){
+      index = Math.floor(Math.random() * 6);
+    }
+    setSelected(index);
+  }
   return(
     <div>
       {anecdotes[selected]}
-      <Button clickEvent={() => setSelected(Math.floor(Math.random() * 6))}/>
-      {console.log(selected)}
+      <p>has {points[selected]} votes</p>
+      <Button clickEvent={HandlePoints} text="vote"/>
+      <Button clickEvent={NextAnecdote} text="next anecdote"/>
+      {console.log(selected, points)}
     </div>
   )
 }
