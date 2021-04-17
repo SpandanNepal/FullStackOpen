@@ -12,7 +12,12 @@ const Button = ({clickEvent, name}) => {
 
 const Statistic = ({value, text}) => {
     return (
-        <p>{text} {value}</p>
+        <>
+        <tr>
+            <td>{text}</td>
+            <td>{value}</td>
+        </tr>
+        </>
     )
 }
 
@@ -21,7 +26,7 @@ const Statistics = ({good, neutral, bad}) => {
     const average = total / 3
     const positive = (good / total) * 100
 
-    if (good == 0 && neutral == 0 && bad == 0){
+    if (good === 0 && neutral === 0 && bad === 0){
         return (
             <p>No feedback given</p>
         )
@@ -30,12 +35,16 @@ const Statistics = ({good, neutral, bad}) => {
         return (
             <>
             <h2>Statistics</h2>
-            <Statistic text="good" value={good}/>
-            <Statistic text="neutral" value={neutral}/>
-            <Statistic text="bad" value={bad}/>
-            <Statistic text="total" value={total}/>
-            <Statistic text="average" value={average}/>
-            <Statistic text="positive" value={isNaN(positive)? 0: positive + " %"}/>
+            <table>
+                <tbody>
+                <Statistic text="good" value={good}/>
+                <Statistic text="neutral" value={neutral}/>
+                <Statistic text="bad" value={bad}/>
+                <Statistic text="total" value={total}/>
+                <Statistic text="average" value={average}/>
+                <Statistic text="positive" value={isNaN(positive)? 0: positive + " %"}/>
+            </tbody>
+            </table>
             </>
         )
     } 
