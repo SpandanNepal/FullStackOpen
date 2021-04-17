@@ -36,13 +36,39 @@ const App = () => {
     }
     setSelected(index);
   }
+
+  const MaxAnecdote = () => {
+    let max_val = 0
+    for (let i = 0; i < 6; i++){
+      if (points[i] > points[max_val]){
+        max_val = i
+      }
+    }
+    if (max_val !== 0){
+      return(
+        <p>{anecdotes[max_val]}</p>
+      )
+    }
+    else{
+      return(
+        <p>No votes yet!!</p>
+      )
+    }
+  }
+
   return(
     <div>
+      <h1>
+        Anecdote of the day
+      </h1>
       {anecdotes[selected]}
       <p>has {points[selected]} votes</p>
       <Button clickEvent={HandlePoints} text="vote"/>
       <Button clickEvent={NextAnecdote} text="next anecdote"/>
-      {console.log(selected, points)}
+      <h1>
+        Anecdote with most votes
+      </h1>
+      <MaxAnecdote />
     </div>
   )
 }
