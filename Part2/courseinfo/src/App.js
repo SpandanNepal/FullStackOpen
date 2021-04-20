@@ -30,22 +30,22 @@ const Content = ({course}) => {
   )
 }
 
-/*
-const Total = (props) => {
-  //console.log(props);
+const Total = ({course}) => {
+  let sumArr = course.parts.map(exercise => exercise.exercises)
+  let sum = sumArr.reduce(function(a, b){return a + b});
   return (
     <div>
-      <p>Number of exercises {props.course.parts[0].exercises + props.course.parts[1].exercises + props.course.parts[2].exercises}</p>
+      <p>Number of exercises {sum}</p> 
     </div>
   )
 }
-*/
 
 const Course = ({course}) => {
   return(
     <>
     <Header course={course}/>
     <Content course={course}/>
+    <Total course={course}/>
     </>
   )
 }
