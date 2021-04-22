@@ -10,10 +10,14 @@ const Person = ({person, number}) => {
 
 const App = () => {
   const [ persons, setPersons ] = useState([
-    {name: "Arto Hellas", number: "9998887777"}
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ])
   const [ newPerson, setNewPerson ] = useState('a new person !!!')
   const [newNumber, setNewNumber] = useState('phone-number')
+  const [filterPerson, setFilterPerson] = useState('');
 
   const checkPersonInArray = (person) => {
       return person.name === newPerson
@@ -36,6 +40,11 @@ const App = () => {
       setNewNumber("")
     }
   }
+
+  const filterPersonList = () => {
+    return persons.filter(person => 
+      person.name.slice(0, filterPerson.length).toLowerCase() === filterPerson.toLowerCase())
+  }
  
   const handlePersonChange = (event) => {
     setNewPerson(event.target.value)
@@ -45,10 +54,18 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  const handlePersonFilter = (event) => {
+    setFilterPerson(event.target.value)
+  }
+
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
       
+      <div>
+        filter shown with <input valute={filterPerson} onChange={handlePersonFilter}/>
+      </div>
+      <h2>add a new</h2>
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newPerson} onChange={handlePersonChange}/><br/><br />
@@ -62,9 +79,14 @@ const App = () => {
       <h2>Numbers</h2>
 
       <div>
-        {persons.map(person => 
+        {/* {persons.map(person => 
           <Person key={person.name} person={person.name} number={person.number}/>
-        )}
+        )} */}
+        {
+          filterPersonList().map(person =>
+            <Person key={person.name} person={person.name} number={person.number}/>
+            )
+        }
       </div>
     </div>
   )
