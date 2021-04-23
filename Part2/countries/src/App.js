@@ -39,20 +39,43 @@ const Languages = ({languages}) => {
 }
 
 const SingleCountryDisplay = ({country}) => {
-  return(
-    <div>
-      <h1>
-        {country.name}
-      </h1>
-      <p>capital: {country.capital}</p>
-      <p>population: {country.population}</p>
-      <h2>Languages</h2>
-      <ul>
-        <Languages languages={country.languages}/>
-      </ul>
-      <img height='100px' width='150px' alt={country.name} src={country.flag} /> 
-    </div>
-  )
+  const [weather, setWeather] = useState([])
+  const [weatherLoad, setWeatherLoad] = useState(true)
+  const apiKey = process.env.REACT_APP_API_KEY
+
+  useEffect(() => {
+    axios.get(`http://api.weatherstack.com/current?access_key=${apiKey}&query=${country.capital}`).then(response => {
+    setWeather(response.data.current)
+    setWeatherLoad(false)
+    })
+  }, [apiKey, country.capital])
+
+  if(weatherLoad){
+    return(
+      <p>loading...</p>
+    )
+  }
+  else{
+    return(
+      <div>
+        <h1>
+          {country.name}
+        </h1>
+        <p>capital: {country.capital}</p>
+        <p>population: {country.population}</p>
+        <h2>Languages</h2>
+        <ul>
+          <Languages languages={country.languages}/>
+        </ul>
+        <img height='100px' width='150px' alt={country.name} src={country.flag} /> 
+        <h2>Weather in {country.capital}</h2>
+        <p><strong>Temperature: </strong>{weather.temperature} celcius</p>
+        <img alt={country.capital} src={weather.weather_icons[0]}/>
+        <p><strong>Weather Description: </strong>{weather.weather_descriptions[0]}</p>
+        <p><strong>Wind: </strong>{weather.wind_speed} mph direction {weather.wind_dir}</p>
+      </div>
+    )
+  }
 }
 
 const CountryList = ({countries, newCountry, loading}) => {
@@ -95,7 +118,7 @@ const App = () => {
     setCountries(response.data)
     setLoading(false)
     })
-  }, [])
+  }, []);
 
   const handleCoutnryChange = (event) => {
     event.preventDefault()
