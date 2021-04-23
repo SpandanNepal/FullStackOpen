@@ -2,11 +2,32 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 const CountryName = ({country}) => {
-  return(
-    <h3>
-      {country.name}
-    </h3>
-  )
+  const [show, setShow] = useState(false)
+
+  const handleButtonClick = () => {
+    setShow(!show);
+  }
+
+  if(show){
+    return(
+      <>
+      <h3>
+        {country.name}&nbsp;
+        <button onClick={handleButtonClick}>{show ? "hide" : "show"}</button>
+      </h3>
+      <SingleCountryDisplay key={country.name} country={country}/>
+      </>
+    )
+  }
+  else{
+    return(
+      <h3>
+        {country.name}&nbsp;
+        <button onClick={handleButtonClick}>{show ? "hide" : "show"}</button>
+      </h3>
+    )
+  }
+  
 }
 
 const Languages = ({languages}) => {
@@ -62,7 +83,6 @@ const CountryList = ({countries, newCountry, loading}) => {
       )
     )
   }
- 
 }
 
 const App = () => {
@@ -77,8 +97,8 @@ const App = () => {
     })
   }, [])
 
-  
   const handleCoutnryChange = (event) => {
+    event.preventDefault()
     setNewCountry(event.target.value)
   }
 
