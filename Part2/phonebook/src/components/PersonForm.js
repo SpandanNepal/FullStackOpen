@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React from 'react'
 
 const PersonForm = ({persons, newPerson, newNumber, setNewPerson, setNewNumber, setPersons}) => {
@@ -18,7 +19,11 @@ const PersonForm = ({persons, newPerson, newNumber, setNewPerson, setNewNumber, 
             name: newPerson,
             number: newNumber
         }
-        setPersons(persons.concat(personObject))
+        axios.post('http://localhost:3001/persons', personObject)
+        .then(response => {
+            console.log(response)
+            setPersons(persons.concat(personObject))
+        })
         setNewPerson("")
         setNewNumber("")
         }
