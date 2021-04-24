@@ -16,9 +16,15 @@ const remove = (id) => {
     axios.delete(url + '/' + id)
 }
 
+const update = (id, personObject) => {
+    const request = axios.put(url + '/' + id, personObject);
+    return request.then((response) => response.data);
+}
+
 const PersonMethods = {
     getPersons,
     postPersons,
-    remove
+    remove,
+    update
 }
 export default PersonMethods;

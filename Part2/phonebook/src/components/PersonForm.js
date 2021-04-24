@@ -1,5 +1,5 @@
 import React from 'react'
-import personService from '../services/Backend'
+import personsService from '../services/Backend'
 
 const PersonForm = ({persons, newPerson, newNumber, setNewPerson, setNewNumber, setPersons}) => {
 
@@ -11,18 +11,29 @@ const PersonForm = ({persons, newPerson, newNumber, setNewPerson, setNewNumber, 
         event.preventDefault()
 
         if (persons.find(checkPersonInArray) !== undefined && persons.find(checkPersonInArray).name === newPerson){
-        alert(newPerson + " is already added to phonebook.");
+            const id = persons.find(checkPersonInArray).id
+            const result = window.confirm(`Are you sure you want to update the number of ${newPerson} as ${newNumber}` )
+            if (result) {
+                const personObject = {
+                    name: newPerson,
+                    number: newNumber
+                }
+                personsService.update(id, personObject)
+                personsService.getPersons().then((response) => {
+                    setPersons(response)
+                })
+            }
         }
 
         else{
-        const personObject = {
-            name: newPerson,
-            number: newNumber
-        }
-        personService.postPersons(personObject)
-        setPersons(persons.concat(personObject))
-        setNewPerson("")
-        setNewNumber("")
+            const personObject = {
+                name: newPerson,
+                number: newNumber
+            }
+            personsService.postPersons(personObject)
+            setPersons(persons.concat(personObject))
+            setNewPerson("")
+            setNewNumber("")
         }
     }
 
