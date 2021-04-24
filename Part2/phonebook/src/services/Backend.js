@@ -12,8 +12,13 @@ const postPersons = (personObject) => {
     return request.then(response => response.data)
 }
 
+const remove = (id) => {
+    axios.delete(url + '/' + id)
+}
+
 const PersonMethods = {
     getPersons,
-    postPersons
+    postPersons,
+    remove
 }
 export default PersonMethods;
