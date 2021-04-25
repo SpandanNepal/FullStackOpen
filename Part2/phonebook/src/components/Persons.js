@@ -7,7 +7,7 @@ const handleDelete = (id, person, setPersons) => {
     personsService.remove(id)
     personsService.getPersons().then((response) => {
     setPersons(response)
-  })
+    })
   }
 }
 

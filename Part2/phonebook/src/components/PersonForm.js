@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import personsService from '../services/Backend'
 import '../index.css'
 
-const Notification = ({message,}) => {
+const Notification = ({message}) => {
     if (message !== null){
         return (
-            <div className="add-person">
+            <div className="success">
                 {message}
             </div>
         )
@@ -79,5 +79,3 @@ const PersonForm = ({persons, newPerson, newNumber, setNewPerson, setNewNumber, 
 }
 
 export default PersonForm
-
-  
