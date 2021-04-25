@@ -1,3 +1,6 @@
+*{
+  padding: 2px;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +13,12 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.add-person{
+  padding: 10px;
+  border: 1px solid darkgreen;
+  color: darkgreen;
+  background-color: darkseagreen;
+  margin-bottom: 10px;
 }

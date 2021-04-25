@@ -1,7 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import personsService from '../services/Backend'
+import '../index.css'
+
+const Notification = ({message,}) => {
+    if (message !== null){
+        return (
+            <div className="add-person">
+                {message}
+            </div>
+        )
+    }
+    else{
+        return null
+    } 
+}
 
 const PersonForm = ({persons, newPerson, newNumber, setNewPerson, setNewNumber, setPersons}) => {
+    const [message, setMessage] = useState(null)
 
     const checkPersonInArray = (person) => {
         return person.name === newPerson
@@ -22,6 +37,7 @@ const PersonForm = ({persons, newPerson, newNumber, setNewPerson, setNewNumber, 
                 personsService.getPersons().then((response) => {
                     setPersons(response)
                 })
+                setMessage(newPerson + ' has been updated to the phonebook')
             }
         }
 
@@ -34,6 +50,7 @@ const PersonForm = ({persons, newPerson, newNumber, setNewPerson, setNewNumber, 
             setPersons(persons.concat(personObject))
             setNewPerson("")
             setNewNumber("")
+            setMessage(newPerson + ' has been added to the phonebook')
         }
     }
 
@@ -46,6 +63,8 @@ const PersonForm = ({persons, newPerson, newNumber, setNewPerson, setNewNumber, 
     }
 
     return(
+        <>
+        <Notification message={message} />
         <form onSubmit={addPerson}>
         <div>
             name: <input value={newPerson} onChange={handlePersonChange}/><br/><br />
@@ -55,6 +74,7 @@ const PersonForm = ({persons, newPerson, newNumber, setNewPerson, setNewNumber, 
             <button type="submit">add</button>
         </div>
         </form>
+        </>
     )
 }
 
