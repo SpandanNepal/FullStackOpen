@@ -61,11 +61,27 @@ app.delete('/api/persons/:id', (request, response) => {
 })
 
 app.post('/api/persons', (request, response) => {
-    const randId = Math.floor(Math.random() * 100)
-    const person = request.body
-    person.id = randId
-    persons = persons.concat(person)
-    response.json(persons)
+    const content = request.body
+    if (!content.name && !content.number){
+        response.status(400).json({
+            'error': 'content is missing'
+        })
+    }
+    else{
+        const dubPerson = persons.filter(person => person.name === content.name)
+        
+        if (dubPerson.length >= 1){
+            response.status(400).json({
+                'error' : 'Name must be unique'
+            })
+        }
+        else{
+            const randId = Math.floor(Math.random() * 100)
+            content.id = randId
+            persons = persons.concat(content)
+            response.json(persons)
+        }
+    }
 })
 
 const PORT = 3001
