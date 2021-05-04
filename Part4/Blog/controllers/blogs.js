@@ -20,7 +20,6 @@ blogRouter.get('/', (request, response) => {
 
 blogRouter.post('/', (request, response) => {
     const content = request.body
-    console.log(content)
     if (!content.title){
         response.status(400).json({
             'error': 'content is missing'
