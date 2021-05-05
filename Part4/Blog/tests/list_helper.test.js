@@ -1,4 +1,5 @@
 const listHelper = require('../utils/list_helper')
+const mongoose = require('mongoose')
 
 blogs = [{"_id":"6090f372be64aa40511099f6","title":"Post 1","author":"Arthur Gunn","url":"http://localhost/api/blog/1","likes":1,"__v":0},{"_id":"6090f3b3710cbf412d266303","title":"Post 2","author":"VTEN","url":"http://localhost/api/blog/2","likes":2,"__v":0},{"_id":"6091004910e4f7516bc75505","title":"Post 3","author":"5:55","url":"http://localhost/api/blog/3","likes":3,"__v":0}]
 
@@ -39,4 +40,8 @@ describe("most liked", () => {
             {"_id":"6091004910e4f7516bc75505","title":"Post 3","author":"5:55","url":"http://localhost/api/blog/3","likes":3,"__v":0}
         )
 	})
+})
+
+afterAll(() => {
+  mongoose.connection.close()
 })
