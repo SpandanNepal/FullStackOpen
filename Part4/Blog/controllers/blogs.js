@@ -1,25 +1,18 @@
 const blogRouter = require('express').Router()
-const mongoose = require('mongoose')
+const Blog = require('../models/blog')
+const User = require('../models/user')
 
-const blogSchema = new mongoose.Schema({
-    title: String,
-    author: String,
-    url: String,
-    likes: Number
+blogRouter.get('/', async (request, response) => {
+    const blogs = await Blog.find({}).populate('user')
+
+    response.json(blogs)
 })
 
-const Blog = mongoose.model('Blog', blogSchema)
-
-blogRouter.get('/', (request, response) => {
-    Blog
-        .find({})
-        .then(blogs => {
-        response.json(blogs)
-    })
-})
-
-blogRouter.post('/', (request, response) => {
+blogRouter.post('/', async (request, response) => {
     const content = request.body
+
+    const user = await User.findById(content.userId)
+
     if (!content.title){
         response.status(400).json({
             'error': 'content is missing'
@@ -30,13 +23,13 @@ blogRouter.post('/', (request, response) => {
             title: content.title,
             author: content.author,
             url: content.url,
-            likes: content.likes
+            likes: content.likes,
+            user: user._id
         })
-        blog
-            .save()
-            .then(result => {
-            response.json(result)
-        })
+
+        const savedBlog = await blog.save()
+        user.blogs = user.blogs.concat(savedBlog._id)
+        await user.save()
     }
 })
 
