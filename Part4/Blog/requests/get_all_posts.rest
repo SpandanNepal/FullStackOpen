@@ -1,10 +1,7 @@
-POST http://localhost:3001/api/blogs
+POST http://localhost:3001/api/login
 content-type: application/json
 
 {
-    "title":"Post 30",
-    "author":"Swoopnasuman",
-    "url":"http://localhost/api/blog/1",
-    "likes":20,
-    "userId": "609384af155f503aa19eb5df"
+    "username": "user2",
+    "password": "12345"
 }
