@@ -18,30 +18,14 @@ const Notification = ({message}) => {
 const PersonForm = ({persons, newPerson, newNumber, setNewPerson, setNewNumber, setPersons}) => {
     const [message, setMessage] = useState(null)
 
-    const checkPersonInArray = (person) => {
-        return person.name === newPerson
-    }
+    // const checkPersonInArray = (person) => {
+    //     return person.name === newPerson
+    // }
 
     const addPerson = (event) => {
         event.preventDefault()
 
-        if (persons.find(checkPersonInArray) !== undefined && persons.find(checkPersonInArray).name === newPerson){
-            const id = persons.find(checkPersonInArray).id
-            const result = window.confirm(`Are you sure you want to update the number of ${newPerson} as ${newNumber}` )
-            if (result) {
-                const personObject = {
-                    name: newPerson,
-                    number: newNumber
-                }
-                personsService.update(id, personObject)
-                personsService.getPersons().then((response) => {
-                    setPersons(response)
-                })
-                setMessage(newPerson + ' has been updated to the phonebook')
-            }
-        }
-
-        else{
+        
             const personObject = {
                 name: newPerson,
                 number: newNumber
@@ -51,7 +35,7 @@ const PersonForm = ({persons, newPerson, newNumber, setNewPerson, setNewNumber, 
             setNewPerson("")
             setNewNumber("")
             setMessage(newPerson + ' has been added to the phonebook')
-        }
+        
     }
 
     const handlePersonChange = (event) => {
